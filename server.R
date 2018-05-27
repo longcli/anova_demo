@@ -14,7 +14,7 @@ library(DT)
 
 # FUNCTIONS ###################################################################
 
-gg_qq <- function(x, distribution = "norm", ..., line.estimate = NULL, conf = 0.95,
+gg_qq_fn <- function(x, distribution = "norm", ..., line.estimate = NULL, conf = 0.95,
                   labels = names(x)){
   q.function <- eval(parse(text = paste0("q", distribution)))
   d.function <- eval(parse(text = paste0("d", distribution)))
@@ -250,7 +250,7 @@ shinyServer(function(input, output, session) {
 
     plotdat4 = datplusfit()
 
-    plot4 = gg_qq(plotdat4$residuals)  # previously used qqPlot from car package
+    plot4 = gg_qq_fn(plotdat4$residuals)  # previously used qqPlot from car package
 
     return(plot4)
 
