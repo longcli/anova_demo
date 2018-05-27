@@ -125,7 +125,8 @@ shinyServer(function(input, output, session) {
     
     #dsmpl <- dplyr::filter(dtemp1, xseq %in% subset_seq)
     
-    dsmpl <- dtemp1[dtemp1$xseq %in% subset_seq, ]
+    dsmpl <- dtemp1 %>% 
+      filter(dtemp1$xseq %in% subset_seq)
     
     return(dsmpl)
     
@@ -134,7 +135,13 @@ shinyServer(function(input, output, session) {
 
   output$datatableanova <- renderDataTable({
 
-    datasetanova()
+    ds1 <- datasetanova() 
+    
+    ds1 <- ds1 %>% 
+      mutate(x = round(x, 3),
+             y = round(y, 6))
+    
+    return(ds1)
 
     })
   
@@ -196,10 +203,11 @@ shinyServer(function(input, output, session) {
   
   output$dataanovasummary <- renderPrint({
     
-    datasummary = ddply(datasetanova(), .(group), summarize,
-                        meanX = mean(x),
-                        stdev = sd(x),
-                        ssize = length(x))
+    datasummary <- datasetanova() %>% 
+      group_by(group) %>% 
+      summarize(meanX = mean(x), 
+                stdev = sd(x), 
+                ssize = length(x))
     
     return(datasummary)
     
@@ -267,10 +275,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-  
 }
-
-
 
 )  # end shinyserver
 

@@ -7,7 +7,9 @@ library(shiny)
 
 
 navbarPage("ANOVA Demo",
+           
            tabPanel("One Way ANOVA",
+                    
                     sidebarLayout(
                       
                       sidebarPanel(
@@ -31,6 +33,7 @@ navbarPage("ANOVA Demo",
                       ),  # end sidebarPanel
                     
                       mainPanel(
+                        
                         plotOutput("datainitplot"),
                         plotOutput("dataanovaplot"),
                         hr(),
@@ -48,31 +51,41 @@ navbarPage("ANOVA Demo",
                         
                         h4("Summary of subset of data used for ANOVA"),
                         verbatimTextOutput('dataanovasummary'),
-                        hr(),
-                        
-                        h4("The raw data"),
-                        DT::dataTableOutput('datatableanova')
+                        hr()
+
                       )
                       
                     )  # end sidebarLayout
                     
            ),  # end tabPanel ANOVA demo
            
-           
-           tabPanel("One Way ANOVA Diagnostics",
+           tabPanel("MODEL DIAGNOSTICS",
+                    
                     fluidPage(
 
-                        plotOutput("plotfitresids"),
-                        hr(),
+                      h4("Normality of Residuals"),
+                      plotOutput("plotfitresids"),
+                      hr(),
                         
-                        h4("Nomarlity of Residuals"),
-                        verbatimTextOutput('shapirowilk'),
-                        plotOutput("plotnormresids")
+                      h4("Normality of Residuals"),
+                      verbatimTextOutput('shapirowilk'),
+                      plotOutput("plotnormresids")
+                    
+                    )  # end fluidPage
+                    
+           ),  # end tabPanel MODEL DIAGNOSTICS
+           
+           tabPanel("DATA",
+                    
+                    fluidPage(
+                      
+                      h4("The raw data"),
+                      DT::dataTableOutput('datatableanova')
                       
                     )  # end fluidPage
                     
-           )  # end tabPanel ANOVA diagnostics
-           
+           )  # end tabPanel DATA
+                    
 )  # end navbarPage
 
 
